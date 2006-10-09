@@ -1,0 +1,6 @@
+category: Libs
+requires: cygwin libintl3 openssl
+external-source: gwenhywfar
+sdesc: "Cross-platform networking and security library (runtime)"
+ldesc: "This is Gwenhywfar, a multi-platform helper library for
+networking and security applications and libraries."

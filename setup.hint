@@ -1,0 +1,5 @@
+category: Utils
+requires: cygwin libgwenhywfar38
+sdesc: "Cross-platform networking and security library (utilities)"
+ldesc: "This is Gwenhywfar, a multi-platform helper library for
+networking and security applications and libraries."
