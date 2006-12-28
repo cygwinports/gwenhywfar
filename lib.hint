@@ -1,5 +1,5 @@
 category: Libs
-requires: cygwin libintl3 openssl
+requires: cygwin libintl8 openssl
 external-source: gwenhywfar
 sdesc: "Cross-platform networking and security library (runtime)"
 ldesc: "This is Gwenhywfar, a multi-platform helper library for
