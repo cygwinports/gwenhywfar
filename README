@@ -4,17 +4,17 @@ This is Gwenhywfar, a multi-platform helper library for networking and
 security applications and libraries.
 
 Runtime requirements:
-  cygwin-1.5.23-2
+  cygwin-1.5.24-2
   libintl8-0.15-1
   openssl-0.9.8d-1
 
 Build requirements:
 (besides corresponding devel packages)
-  cygwin-1.5.23-2
+  cygwin-1.5.24-2
   autoconf2.5-2.61-1
   automake1.9-1.9.6-2
   binutils-20060817-1
-  cygport-0.2.9-1
+  cygport-0.2.11-1
   gawk-3.1.5-4
   gcc-core-3.4.4-3
   libtool1.5-1.5.23a-2
@@ -25,22 +25,22 @@ Canonical website:
   http://gwenhywfar.sourceforge.net/
 
 Canonical download:
-  http://prdownloads.sourceforge.net/gwenhywfar/
+  http://downloads.sourceforge.net/gwenhywfar/
 
 -------------------------------------------
 
 Build instructions:
-  unpack gwenhywfar-2.5.2-X-src.tar.bz2
+  unpack gwenhywfar-2.5.4-X-src.tar.bz2
     if you use setup to install this src package, it will be
 	 unpacked under /usr/src automatically
   cd /usr/src
-  cygport ./gwenhywfar-2.5.2-X.cygport all
+  cygport ./gwenhywfar-2.5.4-X.cygport all
 
 This will create:
-  /usr/src/gwenhywfar-2.5.2-X-src.tar.bz2
-  /usr/src/gwenhywfar-2.5.2-X.tar.bz2
-  /usr/src/libgwenhywfar-devel-2.5.2-X.tar.bz2
-  /usr/src/libgwenhywfar38-2.5.2-X.tar.bz2
+  /usr/src/gwenhywfar-2.5.4-X-src.tar.bz2
+  /usr/src/gwenhywfar-2.5.4-X.tar.bz2
+  /usr/src/libgwenhywfar-devel-2.5.4-X.tar.bz2
+  /usr/src/libgwenhywfar38-2.5.4-X.tar.bz2
 
 -------------------------------------------
 
@@ -52,14 +52,14 @@ Files included in the binary packages:
   /usr/bin/mklistdoc.exe
   /usr/bin/typemaker.exe
   /usr/bin/xmlmerge.exe
-  /usr/share/doc/Cygwin/gwenhywfar-2.5.2.README
-  /usr/share/doc/gwenhywfar-2.5.2/AUTHORS
-  /usr/share/doc/gwenhywfar-2.5.2/COPYING
-  /usr/share/doc/gwenhywfar-2.5.2/ChangeLog
-  /usr/share/doc/gwenhywfar-2.5.2/INSTALL
-  /usr/share/doc/gwenhywfar-2.5.2/NEWS
-  /usr/share/doc/gwenhywfar-2.5.2/README
-  /usr/share/doc/gwenhywfar-2.5.2/TODO
+  /usr/share/doc/Cygwin/gwenhywfar-2.5.4.README
+  /usr/share/doc/gwenhywfar-2.5.4/AUTHORS
+  /usr/share/doc/gwenhywfar-2.5.4/COPYING
+  /usr/share/doc/gwenhywfar-2.5.4/ChangeLog
+  /usr/share/doc/gwenhywfar-2.5.4/INSTALL
+  /usr/share/doc/gwenhywfar-2.5.4/NEWS
+  /usr/share/doc/gwenhywfar-2.5.4/README
+  /usr/share/doc/gwenhywfar-2.5.4/TODO
   /usr/share/locale/de/LC_MESSAGES/gwenhywfar.mo
 
 (libgwenhywfar38)
@@ -192,6 +192,9 @@ Files included in the binary packages:
 ------------------
 
 Port Notes:
+
+----- version 2.5.4-1 -----
+Version bump.
 
 ----- version 2.5.2-1 -----
 Version bump.
