@@ -1,0 +1,146 @@
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in origsrc/gwenhywfar-3.2.0/configure.ac src/gwenhywfar-3.2.0/configure.ac
+--- origsrc/gwenhywfar-3.2.0/configure.ac	2008-03-16 09:21:29.000000000 -0500
++++ src/gwenhywfar-3.2.0/configure.ac	2008-03-28 06:07:11.531250000 -0500
+@@ -339,7 +339,14 @@
+           # hmm, this should be detected by the GETTEXT macro...
+           PROG_LIBRARIES="${PROG_LIBRARIES} -lintl"
+         fi
++
++        # add special libraries for cygwin
++        if test "$OSYSTEM" = "cygwin"; then
++          all_libraries="${all_libraries} -lintl"
++          PROG_LIBRARIES="${PROG_LIBRARIES} -lintl"
++        fi
+     	;;
++        
+     windows)
+         gwenhywfar_sys_is_windows=1
+         dnl ACX_WINDOWS_PATHS
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in origsrc/gwenhywfar-3.2.0/m4/os.m4 src/gwenhywfar-3.2.0/m4/os.m4
+--- origsrc/gwenhywfar-3.2.0/m4/os.m4	2007-11-22 12:27:11.000000000 -0600
++++ src/gwenhywfar-3.2.0/m4/os.m4	2008-03-28 06:07:11.546875000 -0500
+@@ -15,7 +15,7 @@
+ dnl     OS_NAME: full name of your system
+ dnl     OS_SHORTNAME: short name of your system
+ dnl     Depending on your system one of the following is defined in addition:
+-dnl      OS_LINUX, OS_OPENBSD, OS_FREEBSD, OS_BEOS, OS_WIN32
++dnl      OS_LINUX, OS_OPENBSD, OS_FREEBSD, OS_BEOS, OS_CYGWIN, OS_WIN32
+ 
+ # check for OS
+ AC_MSG_CHECKING([host system type])
+@@ -67,6 +67,12 @@
+ 	AC_DEFINE(OS_POSIX,1,[if this is a POSIX system])
+ 	OS_TYPE="posix"
+ 	;;
++    *-cygwin*)
++	OSYSTEM="cygwin"
++	AC_DEFINE(OS_CYGWIN,1,[if Cygwin is used])
++	AC_DEFINE(OS_POSIX,1,[if this is a POSIX system])
++	OS_TYPE="posix"
++	;;
+     *-win32*)
+     	OSYSTEM="windows"
+ 	AC_DEFINE(OS_WIN32,1,[if WIN32 is used])
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in origsrc/gwenhywfar-3.2.0/plugins/ct/ohbci/Makefile.am src/gwenhywfar-3.2.0/plugins/ct/ohbci/Makefile.am
+--- origsrc/gwenhywfar-3.2.0/plugins/ct/ohbci/Makefile.am	2007-11-22 12:27:15.000000000 -0600
++++ src/gwenhywfar-3.2.0/plugins/ct/ohbci/Makefile.am	2008-03-28 06:07:55.687500000 -0500
+@@ -29,7 +29,7 @@
+ # IS_WINDOWS
+ 
+ ohbci_la_LDFLAGS = -no-undefined $(STRIPALL) $(ressource_ldflags) \
+-  -module -omit-version
++  -module -avoid-version
+ 
+ sources:
+ 	for f in $(ohbci_la_SOURCES); do \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in origsrc/gwenhywfar-3.2.0/plugins/dbio/csv/Makefile.am src/gwenhywfar-3.2.0/plugins/dbio/csv/Makefile.am
+--- origsrc/gwenhywfar-3.2.0/plugins/dbio/csv/Makefile.am	2007-11-22 12:27:15.000000000 -0600
++++ src/gwenhywfar-3.2.0/plugins/dbio/csv/Makefile.am	2008-03-28 06:06:29.734375000 -0500
+@@ -28,7 +28,7 @@
+ # IS_WINDOWS
+ 
+ csv_la_LDFLAGS = -no-undefined $(STRIPALL) $(ressource_ldflags) \
+-    -module -version-info 0:1:0
++    -module -avoid-version
+ 
+ 
+ sources:
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in origsrc/gwenhywfar-3.2.0/plugins/dbio/olddb/Makefile.am src/gwenhywfar-3.2.0/plugins/dbio/olddb/Makefile.am
+--- origsrc/gwenhywfar-3.2.0/plugins/dbio/olddb/Makefile.am	2007-11-22 12:27:15.000000000 -0600
++++ src/gwenhywfar-3.2.0/plugins/dbio/olddb/Makefile.am	2008-03-28 06:06:34.265625000 -0500
+@@ -28,7 +28,7 @@
+ # IS_WINDOWS
+ 
+ olddb_la_LDFLAGS = -no-undefined $(STRIPALL) $(ressource_ldflags) \
+-    -module -version-info 0:1:0
++    -module -avoid-version
+ 
+ sources:
+ 	for f in $(olddb_la_SOURCES); do \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in origsrc/gwenhywfar-3.2.0/plugins/dbio/xmldb/Makefile.am src/gwenhywfar-3.2.0/plugins/dbio/xmldb/Makefile.am
+--- origsrc/gwenhywfar-3.2.0/plugins/dbio/xmldb/Makefile.am	2007-11-22 12:27:15.000000000 -0600
++++ src/gwenhywfar-3.2.0/plugins/dbio/xmldb/Makefile.am	2008-03-28 06:06:42.156250000 -0500
+@@ -28,7 +28,7 @@
+ # IS_WINDOWS
+ 
+ xmldb_la_LDFLAGS = -no-undefined $(STRIPALL) $(ressource_ldflags) \
+-    -module -version-info 0:1:0
++    -module -avoid-version
+ 
+ sources:
+ 	for f in $(xmldb_la_SOURCES); do \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x config.h.in -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in origsrc/gwenhywfar-3.2.0/src/os/posix/libloader.c src/gwenhywfar-3.2.0/src/os/posix/libloader.c
+--- origsrc/gwenhywfar-3.2.0/src/os/posix/libloader.c	2007-11-22 12:27:11.000000000 -0600
++++ src/gwenhywfar-3.2.0/src/os/posix/libloader.c	2008-03-28 06:07:11.546875000 -0500
+@@ -196,6 +196,19 @@
+   GWEN_Buffer_AppendString(buffer, name);
+   i=strlen(name);
+ 
++#ifdef OS_CYGWIN
++  /* check whether we have the ".dll" extension */
++  if ((i<=4) || (strcmp(name+i-4, ".dll")!=0)) {
++    /* no SO-extension, add it myself */
++    missingSoExt=1;
++  }
++
++  /* check whether we have the "cyg" prefix */
++  if ((i<=3) || (strncmp(name, "cyg", 3)!=0)) {
++    /* no SO-extension, add it myself */
++    missingLibPrefix=1;
++  }
++#else
+   /* check whether we have the ".so" extension */
+   if ((i<=3) || (strcmp(name+i-3, ".so")!=0)) {
+     /* no SO-extension, add it myself */
+@@ -207,6 +220,7 @@
+     /* no SO-extension, add it myself */
+     missingLibPrefix=1;
+   }
++#endif
+ 
+   /* try to load the library */
+   err=GWEN_LibLoader_LoadLibrary(h, GWEN_Buffer_GetStart(buffer));
+@@ -233,7 +247,11 @@
+   if (missingSoExt) {
+     /* try again, this time with ".so" appended */
+     pos2=GWEN_Buffer_GetPos(buffer);
++#ifdef OS_CYGWIN
++    GWEN_Buffer_AppendString(buffer, ".dll");
++#else
+     GWEN_Buffer_AppendString(buffer, ".so");
++#endif
+     err=GWEN_LibLoader_LoadLibrary(h, GWEN_Buffer_GetStart(buffer));
+     if (!err) {
+       DBG_INFO(GWEN_LOGDOMAIN, "Library \"%s\" loaded",
+@@ -256,7 +274,11 @@
+   if (missingLibPrefix) {
+     GWEN_Buffer_SetPos(buffer, pos);
+     /* insert "lib" */
++#ifdef OS_CYGWIN
++    GWEN_Buffer_InsertString(buffer, "cyg");
++#else
+     GWEN_Buffer_InsertString(buffer, "lib");
++#endif
+     /* try again */
+     err=GWEN_LibLoader_LoadLibrary(h, GWEN_Buffer_GetStart(buffer));
+     if (!err) {

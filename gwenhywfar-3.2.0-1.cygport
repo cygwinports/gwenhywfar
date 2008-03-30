@@ -1,0 +1,13 @@
+DESCRIPTION="Cross-platform networking and security library"
+HOMEPAGE="http://${PN}.sourceforge.net"
+SRC_URI="mirror://debian/pool/main/libg/lib${PN}/lib${PN}_${PV}.orig.tar.gz"
+
+CYGCONF_ARGS="--disable-static --with-docpath=/usr/share/doc/${P}/html"
+
+abi=47
+PKG_NAMES="${PN} lib${PN}${abi} lib${PN}-devel"
+PKG_HINTS="setup lib devel"
+PKG_CONTENTS[0]="--exclude=aclocal etc/ usr/bin/*.exe usr/share/"
+PKG_CONTENTS[1]="usr/bin/*-${abi}.dll usr/lib/${PN}/plugins/${abi}/"
+PKG_CONTENTS[2]="usr/bin/${PN}-config usr/include/ usr/lib/lib${PN}.*
+                 usr/lib/pkgconfig/ usr/share/aclocal/"
