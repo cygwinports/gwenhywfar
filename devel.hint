@@ -1,5 +1,5 @@
 category: Libs
-requires: cygwin libgwenhywfar38 gettext openssl-devel
+requires: libgwenhywfar38 gettext openssl-devel
 external-source: gwenhywfar
 sdesc: "Cross-platform networking and security library (development)"
 ldesc: "This is Gwenhywfar, a multi-platform helper library for
