@@ -1,0 +1,18 @@
+NAME="gwenhywfar"
+VERSION=3.2.0
+RELEASE=1
+CATEGORY="Libs"
+SUMMARY="Cross-platform networking and security library"
+DESCRIPTION="This is Gwenhywfar, a multi-platform helper library for
+networking and security applications and libraries."
+HOMEPAGE="http://gwenhywfar.sourceforge.net"
+SRC_URI="mirror://debian/pool/main/libg/libgwenhywfar/libgwenhywfar_${VERSION}.orig.tar.gz"
+
+PKG_NAMES="gwenhywfar libgwenhywfar47 libgwenhywfar-devel"
+gwenhywfar_CATEGORY="Net"
+gwenhywfar_CONTENTS="--exclude=aclocal etc/ usr/bin/*.exe usr/share/"
+libgwenhywfar47_CONTENTS="usr/bin/cyggwenhywfar-47.dll usr/lib/gwenhywfar/plugins/47/"
+libgwenhywfar_devel_CONTENTS="usr/bin/gwenhywfar-config usr/include/
+	usr/lib/libgwenhywfar.* usr/lib/pkgconfig/ usr/share/aclocal/"
+
+CYGCONF_ARGS="--with-docpath=/usr/share/doc/${NAME}/html"
