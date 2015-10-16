@@ -1,0 +1,91 @@
+--- origsrc/gwenhywfar-4.13.1/m4/os.m4	2014-07-23 15:28:23.000000000 -0500
++++ src/gwenhywfar-4.13.1/m4/os.m4	2015-10-16 00:58:29.135007300 -0500
+@@ -88,6 +88,12 @@ case "$host" in
+ 	AC_DEFINE(OS_PALMOS,1,[if PalmOS is used])
+ 	OS_TYPE="palmos"
+         ;;
++    *-cygwin*)
++	OSYSTEM="cygwin"
++	AC_DEFINE(OS_CYGWIN,1,[if Cygwin is used])
++	AC_DEFINE(OS_POSIX,1,[if this is a POSIX system])
++	OS_TYPE="posix"
++	;;
+     *)
+ 	AC_MSG_WARN([Sorry, but host $host is not supported.
+         Please report if it works anyway. We will assume that your system
+--- origsrc/gwenhywfar-4.13.1/m4/qt4.m4	2014-07-23 15:28:23.000000000 -0500
++++ src/gwenhywfar-4.13.1/m4/qt4.m4	2015-10-16 00:57:10.926576100 -0500
+@@ -120,9 +120,11 @@ qt_libname="QtGui"
+ 
+ # This is the name of the qt library to search for.
+ if test "x$OSYSTEM" = "xosx"; then
+-   qt_searchname="lib${qt_libname}.4.dylib"
++   qt_searchname="lib${qt_libname}.dylib"
++elif test "x$OSYSTEM" = "xcygwin"; then
++   qt_searchname="lib${qt_libname}.dll.a"
+ else
+-   qt_searchname="lib${qt_libname}${std_shrext}.4"
++   qt_searchname="lib${qt_libname}${std_shrext}"
+ fi
+ 
+ 
+--- origsrc/gwenhywfar-4.13.1/src/os/posix/libloader.c	2014-10-12 08:12:22.000000000 -0500
++++ src/gwenhywfar-4.13.1/src/os/posix/libloader.c	2015-10-16 00:59:16.273993200 -0500
+@@ -197,13 +197,21 @@ int GWEN_LibLoader_OpenLibraryWithPath(G
+   i=strlen(name);
+ 
+   /* check whether we have the ".so" extension */
++#ifdef OS_CYGWIN
++  if ((i<=4) || (strcmp(name+i-4, ".dll")!=0)) {
++#else
+   if ((i<=3) || (strcmp(name+i-3, ".so")!=0)) {
++#endif
+     /* no SO-extension, add it myself */
+     missingSoExt=1;
+   }
+ 
+   /* check whether we have the "lib" prefix */
++#ifdef OS_CYGWIN
++  if ((i<=3) || (strncmp(name, "cyg", 3)!=0)) {
++#else
+   if ((i<=3) || (strncmp(name, "lib", 3)!=0)) {
++#endif
+     /* no SO-extension, add it myself */
+     missingLibPrefix=1;
+   }
+@@ -233,7 +241,11 @@ int GWEN_LibLoader_OpenLibraryWithPath(G
+   if (missingSoExt) {
+     /* try again, this time with ".so" appended */
+     pos2=GWEN_Buffer_GetPos(buffer);
++#ifdef OS_CYGWIN
++    GWEN_Buffer_AppendString(buffer, ".dll");
++#else
+     GWEN_Buffer_AppendString(buffer, ".so");
++#endif
+     err=GWEN_LibLoader_LoadLibrary(h, GWEN_Buffer_GetStart(buffer));
+     if (!err) {
+       DBG_INFO(GWEN_LOGDOMAIN, "Library \"%s\" loaded",
+@@ -256,7 +268,11 @@ int GWEN_LibLoader_OpenLibraryWithPath(G
+   if (missingLibPrefix) {
+     GWEN_Buffer_SetPos(buffer, pos);
+     /* insert "lib" */
++#ifdef OS_CYGWIN
++    GWEN_Buffer_InsertString(buffer, "cyg");
++#else
+     GWEN_Buffer_InsertString(buffer, "lib");
++#endif
+     /* try again */
+     err=GWEN_LibLoader_LoadLibrary(h, GWEN_Buffer_GetStart(buffer));
+     if (!err) {
+@@ -276,7 +292,11 @@ int GWEN_LibLoader_OpenLibraryWithPath(G
+ 
+     /* try again, this time with ".so" AND "lib" */
+     if (missingSoExt) {
++#ifdef OS_CYGWIN
++      GWEN_Buffer_AppendString(buffer, ".dll");
++#else
+       GWEN_Buffer_AppendString(buffer, ".so");
++#endif
+       err=GWEN_LibLoader_LoadLibrary(h, GWEN_Buffer_GetStart(buffer));
+       if (!err) {
+         DBG_INFO(GWEN_LOGDOMAIN, "Library \"%s\" loaded",

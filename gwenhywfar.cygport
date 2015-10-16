@@ -1,18 +1,81 @@
+inherit qt4
+
 NAME="gwenhywfar"
-VERSION=3.2.0
+VERSION=4.13.1
 RELEASE=1
 CATEGORY="Libs"
 SUMMARY="Cross-platform networking and security library"
 DESCRIPTION="This is Gwenhywfar, a multi-platform helper library for
 networking and security applications and libraries."
 HOMEPAGE="http://gwenhywfar.sourceforge.net"
-SRC_URI="mirror://debian/pool/main/libg/libgwenhywfar/libgwenhywfar_${VERSION}.orig.tar.gz"
+md5sum=231b4af546c791a85d0f042773e6bd82
+SRC_URI="http://pkgs.fedoraproject.org/repo/pkgs/gwenhywfar/gwenhywfar-${VERSION}.tar.gz/${md5sum}/gwenhywfar-${VERSION}.tar.gz"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwenhywfar-3.4.1-pkgconfig.patch
+	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwen-gcc47.patch
+	4.13.1-cacerts.patch
+	4.13.1-gnutls3.patch
+	4.13.1-libtool-ldflags.patch
+	4.13.1-os-cygwin.patch
+"
 
-PKG_NAMES="gwenhywfar libgwenhywfar47 libgwenhywfar-devel"
+PKG_NAMES="${NAME} lib${NAME}60 lib${NAME}-common lib${NAME}-devel
+	   libgwengui-cpp0 libgwengui-cpp-devel
+	   libgwengui-gtk2_0 libgwengui-gtk2-devel
+	   libgwengui-qt4_0 libgwengui-qt4-devel"
 gwenhywfar_CATEGORY="Net"
-gwenhywfar_CONTENTS="--exclude=aclocal etc/ usr/bin/*.exe usr/share/"
-libgwenhywfar47_CONTENTS="usr/bin/cyggwenhywfar-47.dll usr/lib/gwenhywfar/plugins/47/"
-libgwenhywfar_devel_CONTENTS="usr/bin/gwenhywfar-config usr/include/
-	usr/lib/libgwenhywfar.* usr/lib/pkgconfig/ usr/share/aclocal/"
+gwenhywfar_CONTENTS="usr/bin/gct-tool.exe"
+libgwenhywfar60_REQUIRES="lib${NAME}-common"
+libgwenhywfar60_CONTENTS="
+	usr/bin/cyggwenhywfar-60.dll
+	usr/lib/gwenhywfar/plugins/60/
+"
+libgwenhywfar_common_REQUIRES="ca-certificates"
+libgwenhywfar_common_CONTENTS="
+	--exclude=typemaker2
+	usr/share/doc/
+	usr/share/${NAME}/
+	usr/share/locale/
+"
+libgwenhywfar_devel_CONTENTS="
+	--exclude=gct-tool.exe
+	usr/bin/gwenhywfar-config
+	usr/bin/*.exe
+	usr/include/gwenhywfar4/gwenhywfar/
+	usr/lib/cmake/gwenhywfar-*/
+	usr/lib/libgwenhywfar.dll.a
+	usr/lib/pkgconfig/gwenhywfar.pc
+	usr/share/aclocal/gwenhywfar.m4
+	usr/share/${NAME}/typemaker2/
+"
+libgwengui_cpp0_CONTENTS="usr/bin/cyggwengui-cpp-0.dll"
+libgwengui_cpp_devel_REQUIRES="lib${NAME}-devel"
+libgwengui_cpp_devel_CONTENTS="
+	usr/include/gwenhywfar4/gwen-gui-cpp/
+	usr/lib/libgwengui-cpp.dll.a
+"
+libgwengui_gtk2_0_CONTENTS="usr/bin/cyggwengui-gtk2-0.dll"
+libgwengui_gtk2_devel_REQUIRES="lib${NAME}-devel libgtk2.0-devel"
+libgwengui_gtk2_devel_CONTENTS="
+	usr/include/gwenhywfar4/gwen-gui-gtk2/
+	usr/lib/libgwengui-gtk2.dll.a
+	usr/lib/pkgconfig/gwengui-gtk2.pc
+"
+libgwengui_qt4_0_CONTENTS="usr/bin/cyggwengui-qt4-0.dll"
+libgwengui_qt4_devel_REQUIRES="lib${NAME}-devel libQtGui4-devel"
+libgwengui_qt4_devel_CONTENTS="
+	usr/include/gwenhywfar4/gwen-gui-qt4/
+	usr/lib/cmake/gwengui-qt4-*/
+	usr/lib/libgwengui-qt4.dll.a
+	usr/lib/pkgconfig/gwengui-qt4.pc
+"
 
 CYGCONF_ARGS="--with-docpath=/usr/share/doc/${NAME}/html"
+
+src_install() {
+	cd ${B}
+	cyginstall
+
+	# use system ca-certificates
+	rm ${D}/usr/share/${NAME}/ca-bundle.crt
+}
