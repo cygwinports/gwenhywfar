@@ -2,7 +2,7 @@ inherit qt4
 
 NAME="gwenhywfar"
 VERSION=4.13.1
-RELEASE=1
+RELEASE=2
 CATEGORY="Libs"
 SUMMARY="Cross-platform networking and security library"
 DESCRIPTION="This is Gwenhywfar, a multi-platform helper library for
@@ -13,8 +13,7 @@ SRC_URI="http://pkgs.fedoraproject.org/repo/pkgs/gwenhywfar/gwenhywfar-${VERSION
 PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwenhywfar-3.4.1-pkgconfig.patch
 	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwen-gcc47.patch
-	4.13.1-cacerts.patch
-	4.13.1-gnutls3.patch
+	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwen-gnutls.patch
 	4.13.1-libtool-ldflags.patch
 	4.13.1-os-cygwin.patch
 "
@@ -78,4 +77,5 @@ src_install() {
 
 	# use system ca-certificates
 	rm ${D}/usr/share/${NAME}/ca-bundle.crt
+	dosym /etc/pki/tls/certs/ca-bundle.crt /usr/share/${NAME}/ca-bundle.crt
 }
