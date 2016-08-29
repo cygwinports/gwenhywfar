@@ -1,3 +1,47 @@
+--- origsrc/gwenhywfar-4.15.3/gui/cpp/gwengui-cpp-config.cmake.in	2016-01-15 14:09:17.000000000 -0600
++++ src/gwenhywfar-4.15.3/gui/cpp/gwengui-cpp-config.cmake.in	2016-08-28 23:10:49.124872800 -0500
+@@ -25,7 +25,7 @@ set_and_check(prefix "@prefix@")
+ set_and_check(exec_prefix "@exec_prefix@")
+ set_and_check(includedir "@includedir@")
+ set_and_check(GWENGUI_CPP_INCLUDE_DIRS "@gwenhywfar_headerdir@")
+-set_and_check(GWENGUI_CPP_LIBRARIES "@libdir@/libgwengui-cpp.so")
++set_and_check(GWENGUI_CPP_LIBRARIES "@libdir@/libgwengui-cpp.dll.a")
+ set(GWENGUI_CPP_FOUND true)
+ 
+ if(GWENGUI_CPP_FOUND AND NOT TARGET gwenhywfar::gui-cpp)
+--- origsrc/gwenhywfar-4.15.3/gui/qt4/gwengui-qt4-config.cmake.in	2016-01-15 14:09:17.000000000 -0600
++++ src/gwenhywfar-4.15.3/gui/qt4/gwengui-qt4-config.cmake.in	2016-08-28 23:11:07.420128800 -0500
+@@ -44,7 +44,7 @@ set_and_check(prefix "@prefix@")
+ set_and_check(exec_prefix "@exec_prefix@")
+ set_and_check(includedir "@includedir@")
+ set_and_check(${CMAKE_FIND_PACKAGE_NAME}_INCLUDE_DIRS "@gwenhywfar_headerdir@")
+-set_and_check(${CMAKE_FIND_PACKAGE_NAME}_LIBRARIES "@libdir@/libgwengui-qt4.so")
++set_and_check(${CMAKE_FIND_PACKAGE_NAME}_LIBRARIES "@libdir@/libgwengui-qt4.dll.a")
+ set(${CMAKE_FIND_PACKAGE_NAME}_FOUND true)
+ 
+ if(${CMAKE_FIND_PACKAGE_NAME}_FOUND AND NOT TARGET gwenhywfar::gui-qt4)
+--- origsrc/gwenhywfar-4.15.3/gui/qt5/gwengui-qt5-config.cmake.in	2016-04-01 20:31:40.000000000 -0500
++++ src/gwenhywfar-4.15.3/gui/qt5/gwengui-qt5-config.cmake.in	2016-08-28 23:11:11.401315100 -0500
+@@ -28,7 +28,7 @@ set_and_check(prefix "@prefix@")
+ set_and_check(exec_prefix "@exec_prefix@")
+ set_and_check(includedir "@includedir@")
+ set_and_check(${CMAKE_FIND_PACKAGE_NAME}_INCLUDE_DIRS "@gwenhywfar_headerdir@")
+-set_and_check(${CMAKE_FIND_PACKAGE_NAME}_LIBRARIES "@libdir@/libgwengui-qt5.so")
++set_and_check(${CMAKE_FIND_PACKAGE_NAME}_LIBRARIES "@libdir@/libgwengui-qt5.dll.a")
+ set(${CMAKE_FIND_PACKAGE_NAME}_FOUND true)
+ 
+ if(NOT TARGET gwenhywfar::gui-qt5)
+--- origsrc/gwenhywfar-4.15.3/gwenhywfar-config.cmake.in	2016-01-15 14:09:17.000000000 -0600
++++ src/gwenhywfar-4.15.3/gwenhywfar-config.cmake.in	2016-08-28 23:09:24.943122100 -0500
+@@ -23,7 +23,7 @@ set_and_check(prefix "@prefix@")
+ set_and_check(exec_prefix "@exec_prefix@")
+ set_and_check(includedir "@includedir@")
+ set_and_check(GWENHYWFAR_INCLUDE_DIRS "@gwenhywfar_headerdir@")
+-set_and_check(GWENHYWFAR_LIBRARIES "@libdir@/libgwenhywfar.so.@GWENHYWFAR_SO_EFFECTIVE@")
++set_and_check(GWENHYWFAR_LIBRARIES "@libdir@/libgwenhywfar.dll.a")
+ set(GWENHYWFAR_FOUND TRUE)
+ 
+ # find components
 --- origsrc/gwenhywfar-4.13.1/m4/os.m4	2014-07-23 15:28:23.000000000 -0500
 +++ src/gwenhywfar-4.13.1/m4/os.m4	2015-10-16 00:58:29.135007300 -0500
 @@ -88,6 +88,12 @@ case "$host" in

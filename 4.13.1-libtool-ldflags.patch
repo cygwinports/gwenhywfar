@@ -9,6 +9,17 @@
  libgwengui_qt4_la_SOURCES=\
    qt4dialogbox.cpp \
    qt4_gui.cpp \
+--- origsrc/gwenhywfar-4.15.3/gui/qt5/Makefile.am	2016-01-16 07:31:12.000000000 -0600
++++ src/gwenhywfar-4.15.3/gui/qt5/Makefile.am	2016-08-28 23:12:30.415817600 -0500
+@@ -19,6 +19,8 @@ noinst_HEADERS=\
+   qt5_gui_dialog.hpp
+ 
+ libgwengui_qt5_la_LIBADD=$(QT_LIBS) $(top_builddir)/src/$(gwenhywfar_internal_libname) $(builddir)/../cpp/libgwengui-cpp.la
++libgwengui_qt5_la_LDFLAGS = -no-undefined
++
+ libgwengui_qt5_la_SOURCES=\
+   qt5dialogbox.cpp \
+   qt5_gui.cpp \
 --- origsrc/gwenhywfar-4.13.1/plugins/dbio/csv/Makefile.am	2014-07-23 15:28:23.000000000 -0500
 +++ src/gwenhywfar-4.13.1/plugins/dbio/csv/Makefile.am	2015-10-16 09:11:20.120045500 -0500
 @@ -22,7 +22,7 @@ csv_la_LIBADD=$(top_builddir)/src/libgwe

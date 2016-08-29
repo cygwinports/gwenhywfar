@@ -1,19 +1,18 @@
 inherit qt4
 
 NAME="gwenhywfar"
-VERSION=4.13.1
-RELEASE=2
+VERSION=4.15.3
+RELEASE=1
 CATEGORY="Libs"
 SUMMARY="Cross-platform networking and security library"
 DESCRIPTION="This is Gwenhywfar, a multi-platform helper library for
 networking and security applications and libraries."
 HOMEPAGE="http://gwenhywfar.sourceforge.net"
-md5sum=231b4af546c791a85d0f042773e6bd82
+md5sum=4e96e68482a3cf1cfc00bd3645684c82
 SRC_URI="http://pkgs.fedoraproject.org/repo/pkgs/gwenhywfar/gwenhywfar-${VERSION}.tar.gz/${md5sum}/gwenhywfar-${VERSION}.tar.gz"
 PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwenhywfar-3.4.1-pkgconfig.patch
 	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwen-gcc47.patch
-	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwen-gnutls.patch
 	4.13.1-libtool-ldflags.patch
 	4.13.1-os-cygwin.patch
 "
@@ -51,6 +50,7 @@ libgwengui_cpp0_CONTENTS="usr/bin/cyggwengui-cpp-0.dll"
 libgwengui_cpp_devel_REQUIRES="lib${NAME}-devel"
 libgwengui_cpp_devel_CONTENTS="
 	usr/include/gwenhywfar4/gwen-gui-cpp/
+	usr/lib/cmake/gwengui-cpp-*/
 	usr/lib/libgwengui-cpp.dll.a
 "
 libgwengui_gtk2_0_CONTENTS="usr/bin/cyggwengui-gtk2-0.dll"
