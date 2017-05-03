@@ -2,7 +2,7 @@ inherit qt4
 
 NAME="gwenhywfar"
 VERSION=4.15.3
-RELEASE=1
+RELEASE=2
 CATEGORY="Libs"
 SUMMARY="Cross-platform networking and security library"
 DESCRIPTION="This is Gwenhywfar, a multi-platform helper library for
