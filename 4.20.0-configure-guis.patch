@@ -1,0 +1,13 @@
+--- origsrc/gwenhywfar-4.20.0/configure.ac	2018-02-23 09:35:16.000000000 -0600
++++ src/gwenhywfar-4.20.0/configure.ac	2018-04-17 22:11:42.621124600 -0500
+@@ -839,6 +839,10 @@ fi
+ if test "$gwenhywfar_guis" = "yes"; then
+   gwenhywfar_guis=""
+ fi
++if test "$gwenhywfar_guis" = "all"; then
++  gwenhywfar_guis="fox16 gtk2 gtk3 qt4 qt5"
++fi
++gwenhywfar_guis=`echo $gwenhywfar_guis | sed -e 's/,/ /g'`
+ AC_SUBST(gwenhywfar_guis)
+ 
+ 

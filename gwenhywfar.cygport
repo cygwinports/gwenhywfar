@@ -1,26 +1,29 @@
-inherit qt4
+inherit qt4 qt5
 
 NAME="gwenhywfar"
-VERSION=4.15.3
-RELEASE=2
+VERSION=4.20.0
+RELEASE=1
 CATEGORY="Libs"
 SUMMARY="Cross-platform networking and security library"
 DESCRIPTION="This is Gwenhywfar, a multi-platform helper library for
 networking and security applications and libraries."
 HOMEPAGE="http://gwenhywfar.sourceforge.net"
-md5sum=4e96e68482a3cf1cfc00bd3645684c82
-SRC_URI="http://pkgs.fedoraproject.org/repo/pkgs/gwenhywfar/gwenhywfar-${VERSION}.tar.gz/${md5sum}/gwenhywfar-${VERSION}.tar.gz"
+sha512sum=bc1d47c39654940198396f1bdb9f4a87ff4e0e6b07cb4525c10f7f8e6ce93445d5b9d85586a47c93c558e86eb826f7006eca29b93fad6371dfe72830bf9b88e1
+SRC_URI="https://src.fedoraproject.org/repo/pkgs/gwenhywfar/gwenhywfar-${VERSION}.tar.gz/sha512/${sha512sum}/gwenhywfar-${VERSION}.tar.gz"
 PATCH_URI="
-	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwenhywfar-3.4.1-pkgconfig.patch
-	http://pkgs.fedoraproject.org/cgit/gwenhywfar.git/plain/gwen-gcc47.patch
+	https://src.fedoraproject.org/cgit/rpms/gwenhywfar.git/plain/gwenhywfar-3.4.1-pkgconfig.patch
+	https://src.fedoraproject.org/cgit/rpms/gwenhywfar.git/plain/gwen-gcc47.patch
 	4.13.1-libtool-ldflags.patch
 	4.13.1-os-cygwin.patch
+	4.20.0-configure-guis.patch
 "
 
 PKG_NAMES="${NAME} lib${NAME}60 lib${NAME}-common lib${NAME}-devel
 	   libgwengui-cpp0 libgwengui-cpp-devel
 	   libgwengui-gtk2_0 libgwengui-gtk2-devel
-	   libgwengui-qt4_0 libgwengui-qt4-devel"
+	   libgwengui-gtk3_0 libgwengui-gtk3-devel
+	   libgwengui-qt4_0 libgwengui-qt4-devel
+	   libgwengui-qt5_0 libgwengui-qt5-devel"
 gwenhywfar_CATEGORY="Net"
 gwenhywfar_CONTENTS="usr/bin/gct-tool.exe"
 libgwenhywfar60_REQUIRES="lib${NAME}-common"
@@ -60,6 +63,13 @@ libgwengui_gtk2_devel_CONTENTS="
 	usr/lib/libgwengui-gtk2.dll.a
 	usr/lib/pkgconfig/gwengui-gtk2.pc
 "
+libgwengui_gtk3_0_CONTENTS="usr/bin/cyggwengui-gtk3-0.dll"
+libgwengui_gtk3_devel_REQUIRES="lib${NAME}-devel libgtk3-devel"
+libgwengui_gtk3_devel_CONTENTS="
+	usr/include/gwenhywfar4/gwen-gui-gtk3/
+	usr/lib/libgwengui-gtk3.dll.a
+	usr/lib/pkgconfig/gwengui-gtk3.pc
+"
 libgwengui_qt4_0_CONTENTS="usr/bin/cyggwengui-qt4-0.dll"
 libgwengui_qt4_devel_REQUIRES="lib${NAME}-devel libQtGui4-devel"
 libgwengui_qt4_devel_CONTENTS="
@@ -68,8 +78,26 @@ libgwengui_qt4_devel_CONTENTS="
 	usr/lib/libgwengui-qt4.dll.a
 	usr/lib/pkgconfig/gwengui-qt4.pc
 "
+libgwengui_qt5_0_CONTENTS="usr/bin/cyggwengui-qt5-0.dll"
+libgwengui_qt5_devel_REQUIRES="lib${NAME}-devel libQt5Gui-devel"
+libgwengui_qt5_devel_CONTENTS="
+	usr/include/gwenhywfar4/gwen-gui-qt5/
+	usr/lib/cmake/gwengui-qt5-*/
+	usr/lib/libgwengui-qt5.dll.a
+	usr/lib/pkgconfig/gwengui-qt5.pc
+"
 
-CYGCONF_ARGS="--with-docpath=/usr/share/doc/${NAME}/html"
+CYGCONF_ARGS="
+	--with-docpath=/usr/share/doc/${NAME}/html
+	--with-guis=gtk2,gtk3,qt4,qt5
+	--with-qt4-includes=${QT4_INCLUDEDIR}
+	--with-qt4-libs=${QT4_LIBDIR}
+	--with-qt4-moc=${QT4_MOC}
+	--with-qt4-uic=${QT4_UIC}
+	--with-qt5-qmake=${QT5_QMAKE}
+	--with-qt5-moc=${QT5_MOC}
+	--with-qt5-uic=${QT5_UIC}
+"
 
 src_install() {
 	cd ${B}
